@@ -54,8 +54,56 @@ namespace ComputerSystems
             exit.Size = new System.Drawing.Size(305, 40);
             _new_.Controls.Add(exit);
 
+            //checkbox
+            CheckBox planner = new CheckBox();
+            planner.Text = "Planning";
+            planner.Location = new System.Drawing.Point(10, 410);
+            planner.Width = 70;
+            planner.CheckedChanged += new System.EventHandler(planner_changed);
+            _new_.Controls.Add(planner);
+
+            List<RadioButton> radio = new List<RadioButton>();
+            radio.Add(new RadioButton());
+            radio[0].Text = "Smart";
+            radio.Add(new RadioButton());
+            radio[1].Text = "Min";
+            radio.Add(new RadioButton());
+            radio[2].Text = "Max";
+            for (int i = 0; i < radio.Count; i++)
+            {
+                radio[i].Width = 60;
+                radio[i].Location = new System.Drawing.Point(100 + 70 * i, planner.Location.Y);
+                radio[i].Visible = false;
+                _new_.Controls.Add(radio[i]);
+            }
+            planner.Tag = radio;
+
+            //task complexity
+            List<Power> complexity = new List<Power>();
+            complexity.Add(new Power());
+            complexity.Add(new Power());
+            complexity[0].caption.Text = "Min: 0";
+            complexity[1].caption.Text = "Max: 0";
+            for (int i = 0; i < complexity.Count; i++)
+            {
+                complexity[i].caption.Location = new System.Drawing.Point(150 * i, 440);
+                complexity[i].track.Location = new System.Drawing.Point(50 + i * 150, complexity[i].caption.Location.Y);
+                complexity[i].caption.Width = 50;
+                complexity[i].track.Width = 100;
+                _new_.Controls.Add(complexity[i].caption);
+                _new_.Controls.Add(complexity[i].track);
+            }
+
             _new_.ShowDialog();
             
+        }
+        private void planner_changed(object sender, EventArgs e){
+            CheckBox planner = (CheckBox)sender;
+            List<RadioButton> radio = (List<RadioButton>)planner.Tag;
+            for (int i = 0; i < radio.Count; i++)
+            {
+                radio[i].Visible = !radio[i].Visible;
+            }
         }
         private void close_new_form(object sender, EventArgs e)
         {
@@ -221,8 +269,8 @@ namespace ComputerSystems
                 //bar
                 processors[i].bar = new ProgressBar();
                 processors[i].bar.Location = new System.Drawing.Point(processors[i].image.Location.X, processors[i].image.Location.Y - 30);
-                processors[i].bar.Size = new System.Drawing.Size(88, 20);
-                processors[i].bar.Visible = false;
+                processors[i].bar.Size = new System.Drawing.Size(processors[i].image.Image.Width, 20);
+                processors[i].bar.Visible = true;
                 owner.Controls.Add(processors[i].bar);
                 //type
                 processors[i].type = i + 1;

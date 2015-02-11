@@ -84,7 +84,7 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackgroundImage = global::ComputerSystems.Properties.Resources.BackGround;
+            this.menuStrip1.BackgroundImage = global::ComputerSystems.Properties.Resources.BG;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
