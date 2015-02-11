@@ -1,0 +1,9 @@
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.Main.resources
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.Properties.Resources.resources
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.csproj.GenerateResource.Cache
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\bin\Debug\ComputerSystems.exe.config
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.csprojResolveAssemblyReference.cache
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\bin\Debug\ComputerSystems.exe
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\bin\Debug\ComputerSystems.pdb
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.exe
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.pdb
