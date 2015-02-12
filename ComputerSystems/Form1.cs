@@ -36,16 +36,6 @@ namespace ComputerSystems
             procCount.Size = new System.Drawing.Size(160, 20);
             _new_.Controls.Add(procCount);
 
-            //processor selection
-            ComboBox numberofProc = new ComboBox();
-            for (int i = 1; i <= 9; i++)
-            {
-                numberofProc.Items.Add(i);
-            }
-            numberofProc.Location = new System.Drawing.Point(180, 20);
-            numberofProc.SelectedIndexChanged += new System.EventHandler(numberofProc_changed);
-            _new_.Controls.Add(numberofProc);
-
             //Exit & Accept
             Button exit = new Button();
             exit.Text = "Accept";
@@ -60,8 +50,10 @@ namespace ComputerSystems
             planner.Location = new System.Drawing.Point(10, 410);
             planner.Width = 70;
             planner.CheckedChanged += new System.EventHandler(planner_changed);
+            planner.Enabled = false;
             _new_.Controls.Add(planner);
 
+            //radio type of planning
             List<RadioButton> radio = new List<RadioButton>();
             radio.Add(new RadioButton());
             radio[0].Text = "Smart";
@@ -74,6 +66,8 @@ namespace ComputerSystems
                 radio[i].Width = 60;
                 radio[i].Location = new System.Drawing.Point(100 + 70 * i, planner.Location.Y);
                 radio[i].Visible = false;
+                radio[i].CheckedChanged += new System.EventHandler(radio_changed);
+                radio[i].Tag = radio;
                 _new_.Controls.Add(radio[i]);
             }
             planner.Tag = radio;
@@ -86,24 +80,68 @@ namespace ComputerSystems
             complexity[1].caption.Text = "Max: 0";
             for (int i = 0; i < complexity.Count; i++)
             {
-                complexity[i].caption.Location = new System.Drawing.Point(150 * i, 440);
-                complexity[i].track.Location = new System.Drawing.Point(50 + i * 150, complexity[i].caption.Location.Y);
-                complexity[i].caption.Width = 50;
+                complexity[i].caption.Location = new System.Drawing.Point(155 * i, 440);
+                complexity[i].track.Location = new System.Drawing.Point(55 + i * 155, complexity[i].caption.Location.Y);
+                complexity[i].track.ValueChanged += new System.EventHandler(complexity_value_changed);
+                complexity[i].track.Maximum = 50;
+                complexity[i].track.SmallChange = 1;
+                complexity[i].track.LargeChange = 5;
+                complexity[i].track.Tag = complexity;
+                complexity[i].caption.Width = 60;
+                complexity[i].caption.Tag = i;
                 complexity[i].track.Width = 100;
+                complexity[i].track.Enabled = false;
+                complexity[i].caption.Enabled = false;
+                complexity[i].track.Name = "complexity_track_" + Convert.ToString(i);
+                complexity[i].caption.Name = "complexity_caption_" + Convert.ToString(i);
                 _new_.Controls.Add(complexity[i].caption);
                 _new_.Controls.Add(complexity[i].track);
             }
 
+            //processor selection
+            ComboBox numberofProc = new ComboBox();
+            for (int i = 1; i <= 9; i++)
+            {
+                numberofProc.Items.Add(i);
+            }
+            numberofProc.Location = new System.Drawing.Point(180, 20);
+            numberofProc.SelectedIndexChanged += new System.EventHandler(numberofProc_changed);
+            numberofProc.Tag = planner;
+            _new_.Controls.Add(numberofProc);
+
             _new_.ShowDialog();
             
+        }
+        private void radio_changed(object sender, EventArgs e)
+        {
+            RadioButton radio = (RadioButton)sender;
+            List<RadioButton> planner_select = (List<RadioButton>)radio.Tag;
+            CSystem.use_smart_planning = planner_select[0].Checked;
+            CSystem.use_min_planning = planner_select[1].Checked;
+            CSystem.use_max_planning = planner_select[2].Checked;
+        }
+        private void complexity_value_changed(object sender, EventArgs e)
+        {
+            TrackBar track = (TrackBar)sender;
+            List<Power> complex = (List<Power>)track.Tag;
+            if (complex[0].track.Value > complex[1].track.Value)
+            {
+                complex[1].track.Value = complex[0].track.Value;
+            }
+            complex[0].caption.Text = "Min: " + complex[0].track.Value * 20;
+            complex[1].caption.Text = "Max: " + complex[1].track.Value * 20;
+            CSystem.min_comp = complex[0].track.Value;
+            CSystem.max_comp = complex[1].track.Value;
         }
         private void planner_changed(object sender, EventArgs e){
             CheckBox planner = (CheckBox)sender;
             List<RadioButton> radio = (List<RadioButton>)planner.Tag;
             for (int i = 0; i < radio.Count; i++)
             {
+                radio[i].Checked = false;
                 radio[i].Visible = !radio[i].Visible;
             }
+            CSystem.use_plannig = planner.Checked;
         }
         private void close_new_form(object sender, EventArgs e)
         {
@@ -111,6 +149,15 @@ namespace ComputerSystems
         }
         private void numberofProc_changed(object sender, EventArgs e)
         {
+            CheckBox planner = (CheckBox)((ComboBox)sender).Tag;
+            planner.Enabled = true;
+            foreach (Control c in _new_.Controls)
+            {
+                if (c is TrackBar || c is Label)
+                {
+                    c.Enabled = true;
+                }
+            }
             if (CSystem != null)
             {
                 for (int i = 0; i < CSystem.processors.Count; i++)
@@ -244,6 +291,7 @@ namespace ComputerSystems
         public PictureBox image;
         public ProgressBar bar;
         public int type;
+        //public List<Task> tasks;
         public bool status; //true - job, false - free
         //private Task current;
     }
@@ -277,6 +325,13 @@ namespace ComputerSystems
                 processors[i].status = false;
             }
         }
+        public int min_comp;
+        public int max_comp;
+        public bool use_plannig = false;
+        public bool use_smart_planning = false;
+        public bool use_min_planning = false;
+        public bool use_max_planning = false;
+
         public List<Proc> processors;
         //public Task[] tasks;
         public void accept(Task current)

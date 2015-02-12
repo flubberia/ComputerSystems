@@ -7,3 +7,12 @@ D:\MyDocuments\C#\ComputerSystems\ComputerSystems\bin\Debug\ComputerSystems.exe
 D:\MyDocuments\C#\ComputerSystems\ComputerSystems\bin\Debug\ComputerSystems.pdb
 D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.exe
 D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.pdb
+D:\CS\ComputerSystems\ComputerSystems\bin\Debug\ComputerSystems.exe.config
+D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.exe
+D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.pdb
+D:\CS\ComputerSystems\ComputerSystems\bin\Debug\ComputerSystems.exe
+D:\CS\ComputerSystems\ComputerSystems\bin\Debug\ComputerSystems.pdb
+D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.csprojResolveAssemblyReference.cache
+D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.Main.resources
+D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.Properties.Resources.resources
+D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.csproj.GenerateResource.Cache
