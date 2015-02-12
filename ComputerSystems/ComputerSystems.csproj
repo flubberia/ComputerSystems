@@ -80,31 +80,59 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="play.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="pause.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="file_ch.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\BackGround.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Info.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Info1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Screen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Screen1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_-.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_+.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Global.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Processor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Task.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CPU.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Lucida_Handwriting.ttf" />
+    <None Include="Resources\new_win_405x620.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Task_Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Task_Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Task_Yellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Yellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CPU_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\side_button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

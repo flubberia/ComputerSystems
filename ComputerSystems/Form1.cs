@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Text;
 
 namespace ComputerSystems
 {
@@ -17,23 +18,56 @@ namespace ComputerSystems
         CS CSystem;
         Form _new_;
         List<Power> procPower;
+        List<PictureBox> side_panel;
         public Main()
         {
             InitializeComponent();
+            side_panel_init();
         }
-
+        private void side_panel_init()
+        {
+            side_panel = new List<PictureBox>();
+            for (int i = 0; i < 3; i++)
+            {
+                side_panel.Add(new PictureBox());
+                side_panel[i].Location = new System.Drawing.Point(183, 19 + (6 + ComputerSystems.Properties.Resources.Button_Global.Height)*i);
+                side_panel[i].Visible = true;
+                side_panel[i].Enabled = true;
+                side_panel[i].Size = ComputerSystems.Properties.Resources.Button_Global.Size;
+                side_panel[i].Click += new System.EventHandler(side_panel_click);
+                side_panel[i].BackColor = System.Drawing.Color.Transparent;
+                panel1.Controls.Add(side_panel[i]);
+            }
+            side_panel[0].Image = ComputerSystems.Properties.Resources.Button_Global;
+            side_panel[0].Enabled = false;
+            side_panel[0].Tag = ComputerSystems.Properties.Resources.Button_Global;
+            side_panel[1].Tag = ComputerSystems.Properties.Resources.Button_Processor;
+            side_panel[2].Tag = ComputerSystems.Properties.Resources.Button_Task;
+        }
+        private void side_panel_click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < side_panel.Count; i++)
+            {
+                side_panel[i].Image = null;
+                side_panel[i].Enabled = true;
+            }
+            ((PictureBox)sender).Enabled = false;
+            ((PictureBox)sender).Image = (Bitmap)((PictureBox)sender).Tag;
+        }
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _new_ = new Form();
             _new_.StartPosition = FormStartPosition.CenterScreen;
             _new_.Size = new System.Drawing.Size(320, 550);
             _new_.FormBorderStyle = FormBorderStyle.FixedDialog;
+            _new_.BackgroundImage = ComputerSystems.Properties.Resources.new_win_405x620;
 
             //Caption
             Label procCount = new Label();
             procCount.Location = new System.Drawing.Point(10, 20);
             procCount.Text = "Number of processors in system";
             procCount.Size = new System.Drawing.Size(160, 20);
+            procCount.BackColor = System.Drawing.Color.Transparent;
             _new_.Controls.Add(procCount);
 
             //Exit & Accept
@@ -51,6 +85,7 @@ namespace ComputerSystems
             planner.Width = 70;
             planner.CheckedChanged += new System.EventHandler(planner_changed);
             planner.Enabled = false;
+            planner.BackColor = System.Drawing.Color.Transparent;
             _new_.Controls.Add(planner);
 
             //radio type of planning
@@ -68,6 +103,7 @@ namespace ComputerSystems
                 radio[i].Visible = false;
                 radio[i].CheckedChanged += new System.EventHandler(radio_changed);
                 radio[i].Tag = radio;
+                radio[i].BackColor = System.Drawing.Color.Transparent;
                 _new_.Controls.Add(radio[i]);
             }
             planner.Tag = radio;
@@ -94,6 +130,8 @@ namespace ComputerSystems
                 complexity[i].caption.Enabled = false;
                 complexity[i].track.Name = "complexity_track_" + Convert.ToString(i);
                 complexity[i].caption.Name = "complexity_caption_" + Convert.ToString(i);
+                complexity[i].caption.BackColor = System.Drawing.Color.Transparent;
+                //complexity[i].track.BackColor = System.Drawing.Color.Transparent;
                 _new_.Controls.Add(complexity[i].caption);
                 _new_.Controls.Add(complexity[i].track);
             }
@@ -206,6 +244,8 @@ namespace ComputerSystems
                 procPower[i].caption.Enabled = true;
                 procPower[i].caption.Size = new System.Drawing.Size(150, 30);
                 procPower[i].caption.Text = "Processor " + Convert.ToString(i + 1) + " power: 0";
+                procPower[i].caption.BackColor = System.Drawing.Color.Transparent;
+                //procPower[i].track.BackColor = System.Drawing.Color.Transparent;
                 _new_.Controls.Add(procPower[i].track);
                 _new_.Controls.Add(procPower[i].caption);
             }
@@ -236,11 +276,11 @@ namespace ComputerSystems
         {
             if (play)
             {
-                play_pause.BackgroundImage = ComputerSystems.Properties.Resources.pause;
+                play_pause.Image = ComputerSystems.Properties.Resources.Button_Pause;
             }
             else
             {
-                play_pause.BackgroundImage = ComputerSystems.Properties.Resources.play;
+                play_pause.Image = ComputerSystems.Properties.Resources.Button_Play;
             }
             play = !play;
         }
@@ -297,7 +337,7 @@ namespace ComputerSystems
     }
     public class CS
     {
-        public CS(int proc, GroupBox owner)
+        public CS(int proc, Panel owner)
         {
             processors = new List<Proc>();
             if (proc > 9)
@@ -309,16 +349,19 @@ namespace ComputerSystems
                 //processor image
                 processors.Add(new Proc());
                 processors[i].image = new PictureBox();
-                processors[i].image.Image = ComputerSystems.Properties.Resources.Proc;
-                processors[i].image.Location = new System.Drawing.Point(100 + 200 * (i % 3), 70 + 140 * (i / 3));
+                processors[i].image.Image = ComputerSystems.Properties.Resources.CPU_2;
+                processors[i].image.Location = new System.Drawing.Point(80 + 158 * (i % 3), 20 + 155 * (i / 3));
+                processors[i].image.BackColor = System.Drawing.Color.Transparent;
+                processors[i].image.BorderStyle = BorderStyle.None;
                 processors[i].image.Size = processors[i].image.Image.Size;
                 processors[i].image.Visible = true;
                 owner.Controls.Add(processors[i].image);
+                processors[i].image.BringToFront();
                 //bar
                 processors[i].bar = new ProgressBar();
                 processors[i].bar.Location = new System.Drawing.Point(processors[i].image.Location.X, processors[i].image.Location.Y - 30);
                 processors[i].bar.Size = new System.Drawing.Size(processors[i].image.Image.Width, 20);
-                processors[i].bar.Visible = true;
+                processors[i].bar.Visible = false;
                 owner.Controls.Add(processors[i].bar);
                 //type
                 processors[i].type = i + 1;
