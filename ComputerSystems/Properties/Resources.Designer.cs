@@ -73,6 +73,16 @@ namespace ComputerSystems.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BG_2 {
+            get {
+                object obj = ResourceManager.GetObject("BG_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Button__ {
             get {
                 object obj = ResourceManager.GetObject("Button__", resourceCulture);
@@ -166,6 +176,16 @@ namespace ComputerSystems.Properties {
         internal static System.Drawing.Bitmap Green {
             get {
                 object obj = ResourceManager.GetObject("Green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap New_win {
+            get {
+                object obj = ResourceManager.GetObject("New_win", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

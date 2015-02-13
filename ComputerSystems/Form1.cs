@@ -60,7 +60,7 @@ namespace ComputerSystems
             _new_.StartPosition = FormStartPosition.CenterScreen;
             _new_.Size = new System.Drawing.Size(320, 550);
             _new_.FormBorderStyle = FormBorderStyle.FixedDialog;
-            _new_.BackgroundImage = ComputerSystems.Properties.Resources.new_win_405x620;
+            _new_.BackgroundImage = ComputerSystems.Properties.Resources.New_win;
 
             //Caption
             Label procCount = new Label();

@@ -15,4 +15,3 @@ D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.Properties.Resou
 D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.csproj.GenerateResource.Cache
 D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.exe
 D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.pdb
-D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.csprojResolveAssemblyReference.cache
