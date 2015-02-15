@@ -347,10 +347,11 @@ namespace ComputerSystems
             for (int i = 0; i < proc; i++)
             {
                 //processor image
+                Bitmap CPU = new Bitmap(ComputerSystems.Properties.Resources.CPU_2);
                 processors.Add(new Proc());
                 processors[i].image = new PictureBox();
-                processors[i].image.Image = ComputerSystems.Properties.Resources.CPU_2;
-                processors[i].image.Location = new System.Drawing.Point(80 + 158 * (i % 3), 20 + 155 * (i / 3));
+                processors[i].image.Image = CPU;
+                processors[i].image.Location = new System.Drawing.Point(80 + CPU.Width * (i % 3), 20 + CPU.Height * (i / 3));
                 processors[i].image.BackColor = System.Drawing.Color.Transparent;
                 processors[i].image.BorderStyle = BorderStyle.None;
                 processors[i].image.Size = processors[i].image.Image.Size;
