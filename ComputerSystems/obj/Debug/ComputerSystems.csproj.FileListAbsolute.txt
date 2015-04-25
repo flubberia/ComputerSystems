@@ -16,3 +16,5 @@ D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.csproj.GenerateR
 D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.exe
 D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.pdb
 D:\CS\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.csprojResolveAssemblyReference.cache
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.Controls.Global.resources
+D:\MyDocuments\C#\ComputerSystems\ComputerSystems\obj\Debug\ComputerSystems.Controls.Processors.resources

@@ -45,6 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Global.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Global.Designer.cs">
+      <DependentUpon>Global.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Processors.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Processors.Designer.cs">
+      <DependentUpon>Processors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +65,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\Global.resx">
+      <DependentUpon>Global.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Processors.resx">
+      <DependentUpon>Processors.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,14 +150,24 @@
     <None Include="Resources\CPU_2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\side_button.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\BG_2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\New_win.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\BG_2_task.png" />
+    <Content Include="Resources\Loading_Green.png" />
+    <Content Include="Resources\Loading_Green_1.png" />
+    <Content Include="Resources\Loading_Red.png" />
+    <Content Include="Resources\Loading_Red_1.png" />
+    <Content Include="Resources\Loading_Yellow.png" />
+    <Content Include="Resources\Loading_Yellow_1.png" />
+    <Content Include="Resources\win.png" />
+    <Content Include="Resources\win_1.png" />
+    <Content Include="Resources\win_2_2.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
