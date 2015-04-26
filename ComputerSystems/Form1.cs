@@ -17,6 +17,7 @@ namespace ComputerSystems
    
     public partial class Main : Form
     {
+        Random rnd = new Random();
         Mutex mut = new Mutex();
         int TaskCount = 0;
         bool play = true;
@@ -92,7 +93,7 @@ namespace ComputerSystems
 
         private void createNewTask(object sender, EventArgs e)
         {
-            Random rnd = new Random();
+           
             if (rnd.Next(100) > probability && TaskCount < maxTasks)
             {
                 Task task = new Task();
@@ -102,6 +103,10 @@ namespace ComputerSystems
                 genComplex += task.complexity;
                 avgComplex = genComplex / TaskCount;
                 task.name = "Task: " + TaskCount;
+                for (int i = 0; i < 1 + rnd.Next(CSystem.processors.Count); i++)
+                {
+                    task.types.Add(1 + rnd.Next(CSystem.processors.Count));
+                }
                 mut.WaitOne();
                 logging.AppendText(task.name + " created: "+ task.complexity + "\n");
                 mut.ReleaseMutex();
@@ -121,64 +126,91 @@ namespace ComputerSystems
             if (CSystem.tasks.Count > 0)
             {
                 Task topTask = new Task(CSystem.tasks[0]);
-                for (int i = 0; i < CSystem.processors.Count; i++)
-                {
-                    if (!CSystem.processors[i].status)
-                    {
-                        CSystem.processors[i].tasks.Add(topTask);
-                        CSystem.processors[i].tasksTaken++;
-                        CSystem.processors[i].totalComplexity += topTask.complexity;
-                        CSystem.tasks.RemoveAt(0);
-                        StartProccessor(CSystem.processors[i]);
-                        break;
-                    }
-                }
+                MatchProcType(topTask);
             }
         }
 
-        private void StartProccessor(Proc proc)
+        private void MatchProcType(Task t)
         {
-            if (proc.tasks.Count > 0)
+            List<Proc> prols = new List<Proc>();
+            foreach (Proc item in CSystem.processors)
             {
-                double koeff = (double)proc.tasks[0].complexity / proc.power;
-                System.Windows.Forms.Timer time = new System.Windows.Forms.Timer();
-                time.Interval = (int)((CommonTimeInterval * koeff) / NumberOfIterations);
-                time.Tick += new System.EventHandler(drawProgress);
-                proc.iter = NumberOfIterations;
-                time.Tag = proc;
-                proc.timer = time;
-                proc.status = true; //job
-                int barrier = (CSystem.max_comp - CSystem.min_comp) / 3;
-                int simple = CSystem.min_comp + barrier;
-                int hard = CSystem.max_comp - barrier;
-                PictureBox innerView = (PictureBox)proc.image.Tag;
-                if (proc.tasks[0].complexity > simple)
+                if (t.types.Contains(item.type))
                 {
-                    if (proc.tasks[0].complexity <= hard)
-                    {
-                        int yellow = int.Parse(Yellow_Task.Text) + 1;
-                        Yellow_Task.Text = yellow.ToString();
-                        innerView.Image = ComputerSystems.Properties.Resources.Loading_Yellow_1;
+                    prols.Add(item);
+                }
+            }
+            bool isMatched = false;
+            foreach (Proc item in prols)
+            {
+                if (!item.status)
+                {
+                    isMatched = true;
+                    item.tasks.Add(t);
+                    item.tasksTaken++;
+                    item.totalComplexity += t.complexity;
+                    CSystem.tasks.RemoveAt(0);
+                    StartProccessor(item);
+                    break;
+                }
+            }
+            if (!isMatched)
+            {
+                Proc item = prols[rnd.Next(prols.Count)];
+                item.tasks.Add(t);
+                item.tasksTaken++;
+                item.totalComplexity += t.complexity;
+                CSystem.tasks.RemoveAt(0);
+                StartProccessor(item);
+            }
 
+        }
+        private void StartProccessor(Proc  proc)
+        {
+            if (!proc.status)
+            {
+                if (proc.tasks.Count > 0)
+                {
+                    double koeff = (double)proc.tasks[0].complexity / proc.power;
+                    System.Windows.Forms.Timer time = new System.Windows.Forms.Timer();
+                    time.Interval = (int)((CommonTimeInterval * koeff) / NumberOfIterations);
+                    time.Tick += new System.EventHandler(drawProgress);
+                    proc.iter = NumberOfIterations;
+                    time.Tag = proc;
+                    proc.timer = time;
+                    proc.status = true; //job
+                    int barrier = (CSystem.max_comp - CSystem.min_comp) / 3;
+                    int simple = CSystem.min_comp + barrier;
+                    int hard = CSystem.max_comp - barrier;
+                    PictureBox innerView = (PictureBox)proc.image.Tag;
+                    if (proc.tasks[0].complexity > simple)
+                    {
+                        if (proc.tasks[0].complexity <= hard)
+                        {
+                            int yellow = int.Parse(Yellow_Task.Text) + 1;
+                            Yellow_Task.Text = yellow.ToString();
+                            innerView.Image = ComputerSystems.Properties.Resources.Loading_Yellow_1;
+
+                        }
+                        else
+                        {
+                            int red = int.Parse(Red_Task.Text) + 1;
+                            Red_Task.Text = red.ToString();
+                            innerView.Image = ComputerSystems.Properties.Resources.Loading_Red_1;
+                        }
                     }
                     else
                     {
-                        int red = int.Parse(Red_Task.Text) + 1;
-                        Red_Task.Text = red.ToString();
-                        innerView.Image = ComputerSystems.Properties.Resources.Loading_Red_1;
+                        int green = int.Parse(Green_Task.Text) + 1;
+                        Green_Task.Text = green.ToString();
+                        innerView.Image = ComputerSystems.Properties.Resources.Loading_Green_1;
                     }
-                }
-                else
-                {
-                    int green = int.Parse(Green_Task.Text) + 1;
-                    Green_Task.Text = green.ToString();
-                    innerView.Image = ComputerSystems.Properties.Resources.Loading_Green_1;
-                }
 
-                time.Start();
-                mut.WaitOne();
-                logging.AppendText("Processor " + proc.type + " started " + proc.tasks[0].name + "\n");
-                mut.ReleaseMutex();
+                    time.Start();
+                    mut.WaitOne();
+                    logging.AppendText("Processor " + proc.type + " started " + proc.tasks[0].name + "\n");
+                    mut.ReleaseMutex();
+                }
             }
         }
         private void side_panel_init()
@@ -335,11 +367,13 @@ namespace ComputerSystems
         {
             if (_new_ == null)
             {
+                //form
                 Options = new Form();
                 Options.StartPosition = FormStartPosition.CenterScreen;
                 Options.FormBorderStyle = FormBorderStyle.Fixed3D;
                 Options.Size = new System.Drawing.Size(320, 520);
 
+                //BaseTimeInterval
                 Power time = new Power();
                 time.caption.Text = "Set time period: ";
                 time.caption.Location = new Point(10, 10);
@@ -625,7 +659,13 @@ namespace ComputerSystems
                     menuStrip1.Enabled = true;
                     MessageBox.Show("Time Elapsed " + currentTime.Text, "Time", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                ((System.Windows.Forms.Timer)sender).Stop();
+
+                    ((System.Windows.Forms.Timer)sender).Stop();
+            
+                if (proc.tasks.Count > 0)
+                    StartProccessor(proc);
+                
+
             }
             else
             {
@@ -665,18 +705,16 @@ namespace ComputerSystems
     {
         public Task()
         {
-
+            types = new HashSet<int>();
         }
         public Task(Task task)
         {
             complexity = task.complexity;
             types = task.types;
-            image = task.image;
             name = task.name;
         }
         public int complexity;
-        public int[] types;
-        public PictureBox image;
+        public HashSet<int> types;
         public string name;
     }
     public class Proc
