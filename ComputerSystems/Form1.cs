@@ -140,30 +140,123 @@ namespace ComputerSystems
                     prols.Add(item);
                 }
             }
-            bool isMatched = false;
-            foreach (Proc item in prols)
+            if ((CSystem.use_smart_planning &&
+                CSystem.use_min_planning &&
+                CSystem.use_max_planning) == false)
             {
-                if (!item.status)
+                #region FIFO
+                if (CSystem.tasks.Count > 0)
                 {
-                    isMatched = true;
-                    item.tasks.Add(t);
-                    item.tasksTaken++;
-                    item.totalComplexity += t.complexity;
-                    CSystem.tasks.RemoveAt(0);
-                    StartProccessor(item);
-                    break;
+                    bool isMatched = false;
+                    foreach (Proc item in prols)
+                    {
+                        if (!item.status)
+                        {
+                            isMatched = true;
+                            item.tasks.Add(t);
+                            item.tasksTaken++;
+                            item.totalComplexity += t.complexity;
+                            CSystem.tasks.RemoveAt(0);
+                            StartProccessor(item);
+                            break;
+                        }
+                    }
+                    if (!isMatched)
+                    {
+                        Proc item = prols[rnd.Next(prols.Count)];
+                        item.tasks.Add(t);
+                        item.tasksTaken++;
+                        item.totalComplexity += t.complexity;
+                        CSystem.tasks.RemoveAt(0);
+                        StartProccessor(item);
+                    }
                 }
+                #endregion
             }
-            if (!isMatched)
+            if (CSystem.use_max_planning)
             {
-                Proc item = prols[rnd.Next(prols.Count)];
-                item.tasks.Add(t);
-                item.tasksTaken++;
-                item.totalComplexity += t.complexity;
-                CSystem.tasks.RemoveAt(0);
-                StartProccessor(item);
+                #region MAX
+                if (CSystem.tasks.Count > 0)
+                {
+                    bool isMatched = false;
+                    foreach (Proc item in prols)
+                    {
+                        if (!item.status)
+                        {
+                            isMatched = true;
+                            item.tasks.Add(t);
+                            item.tasksTaken++;
+                            item.totalComplexity += t.complexity;
+                            CSystem.tasks.RemoveAt(0);
+                            StartProccessor(item);
+                            break;
+                        }
+                    }
+                    if (!isMatched)
+                    {
+                        Proc max = new Proc();
+                        foreach (Proc item in prols)
+                        {
+                            if (max.power > item.power)
+                            {
+                                max = item;
+                            }
+                        }
+                        max.tasks.Add(t);
+                        max.tasksTaken++;
+                        max.totalComplexity += t.complexity;
+                        CSystem.tasks.RemoveAt(0);
+                        StartProccessor(max);
+                    }
+                }
+                #endregion
             }
+            else if (CSystem.use_min_planning)
+            {
+                #region MIN
+                if (CSystem.tasks.Count > 0)
+                {
+                    bool isMatched = false;
+                    foreach (Proc item in prols)
+                    {
+                        if (!item.status)
+                        {
+                            isMatched = true;
+                            item.tasks.Add(t);
+                            item.tasksTaken++;
+                            item.totalComplexity += t.complexity;
+                            CSystem.tasks.RemoveAt(0);
+                            StartProccessor(item);
+                            break;
+                        }
+                    }
+                    if (!isMatched)
+                    {
+                        Proc min = new Proc();
+                        foreach (Proc item in prols)
+                        {
+                            if (min.power < item.power)
+                            {
+                                min = item;
+                            }
+                        }
+                        min.tasks.Add(t);
+                        min.tasksTaken++;
+                        min.totalComplexity += t.complexity;
+                        CSystem.tasks.RemoveAt(0);
+                        StartProccessor(min);
+                    }
+                }
+                #endregion
 
+            }
+            else
+            {
+                #region SMART
+                #endregion
+            }
+            
+            
         }
         private void StartProccessor(Proc  proc)
         {
@@ -257,6 +350,8 @@ namespace ComputerSystems
             taskTimer.Stop();
             TaskCount = 0;
             finishedTasks = 0;
+            genComplex = 0;
+            avgComplex = 0;
             if (processors1.dataGridView1.Rows != null)
                 processors1.dataGridView1.Rows.Clear();
             stopwatch = new Stopwatch();
